@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { config } from './config';
+import { config } from './config.ts';
 import { View, ViewProps } from 'react-native';
 import { OverlayProvider } from '@gluestack-ui/overlay';
 import { ToastProvider } from '@gluestack-ui/toast';
