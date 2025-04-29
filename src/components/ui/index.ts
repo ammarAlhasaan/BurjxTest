@@ -5,6 +5,7 @@ import {Text} from './text';
 import { Card } from './card';
 import { useTheme } from './gluestack-ui-provider/useTheme';
 import ToggleButtonGroup from './toggle-button-group';
+import ScrollableTabs from './scrollable-tabs';
 
 export * from './button';
 export * from './badge';
@@ -20,6 +21,7 @@ export {
   Text,
   Card,
   ToggleButtonGroup,
+  ScrollableTabs,
   useTheme,
 };
 

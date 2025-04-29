@@ -2,8 +2,8 @@ import React, {memo, useCallback, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {useAppSelector} from '@/src/state/hooks';
 import {selectGroupedCoins} from '@/src/state/slices/coinSlice';
-import ScrollableTabs from '@/src/components/ui/scrollable-tabs';
-import GroupedCoinList from '@/src/screens/home-screen/GroupedCoinList';
+import {ScrollableTabs} from '@/src/components/ui';
+import GroupedCoinList from './GroupedCoinList';
 
 const GroupedCoinSection = () => {
   const groupedCoins = useAppSelector(selectGroupedCoins);

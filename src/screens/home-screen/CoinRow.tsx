@@ -1,10 +1,7 @@
 import React, {memo} from 'react';
 import {Pressable, View} from 'react-native';
-
 import {Badge, BadgeText, Card, Col, Row, Text} from '@/src/components/ui';
-
 import {Coin} from '@/src/types';
-
 import {formatPrice} from '@/src/utils/price';
 import {CoinInfo, TrendChart} from '@/src/components/shared';
 

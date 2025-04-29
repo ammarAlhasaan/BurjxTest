@@ -5,7 +5,7 @@ import {
   useGetGroupedCoinsQuery,
 } from '@/src/state/slices/coinSlice';
 import {Text, Spinner, Center} from '@/src/components/ui';
-import CoinsList from '@/src/screens/home-screen/CoinList';
+import CoinsList from './CoinList';
 
 
 
