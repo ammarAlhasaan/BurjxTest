@@ -1,6 +1,6 @@
 import React, {memo, useCallback} from 'react';
 import {FlatList, View} from 'react-native';
-import {Text} from '@/src/components/ui';
+import {Spinner, Text} from '@/src/components/ui';
 import {useNavigation} from '@react-navigation/native';
 import {Coin} from '@/src/types';
 import CoinRow from './CoinRow';
@@ -35,7 +35,7 @@ const CoinsList = memo(({coins, fetchNextPage, isFetchingNextPage}: {
       renderItem={renderItem}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={isFetchingNextPage ? <Text>Loading more...</Text> : null}
+      ListFooterComponent={isFetchingNextPage ? <Spinner /> : null}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <View className="mb-4">

@@ -7,7 +7,7 @@ import {
   VictoryTheme,
   VictoryAxis,
 } from 'victory-native';
-import {useTheme} from '@/src/components/ui';
+import {Center, Spinner, useTheme} from '@/src/components/ui';
 
 const E_WIDTH = Dimensions.get('screen').width - 20;
 const E_HEIGHT = 300;
@@ -41,6 +41,9 @@ const Chart = ({ data }: CandleChartProps) => {
     return { x: [start, end] };
   }, [chartData]);
 
+  if(!data){
+    return <Center style={{ width: E_WIDTH, height: E_HEIGHT }}><Spinner/></Center>;
+  }
   return (
     <View style={{ width: E_WIDTH, height: E_HEIGHT }}>
       <VictoryChart

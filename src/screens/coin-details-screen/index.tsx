@@ -7,20 +7,22 @@ import {formatPrice} from '@/src/utils/price';
 import {View} from 'react-native';
 import {Coin} from '@/src/types';
 import {BlurCard, CoinInfoHeader, GlowingBackground, Header} from '@/src/components/shared';
-import {Badge, BadgeText, Col, Row, Text, ToggleButtonGroup} from '@/src/components/ui';
+import {Badge, BadgeText, Center, Col, Row, Spinner, Text, ToggleButtonGroup} from '@/src/components/ui';
 
 
-const CoinDetails = ({coin}: { coin: Coin }) => {
+const CoinDetails = ({coin}: { coin?: Coin }) => {
   const [days, setDays] = React.useState('1');
 
-  const {data} = useGetCoinHistoryQuery({productId: coin.productId, days}, {
+  const {data} = useGetCoinHistoryQuery({productId: coin?.productId || 0, days}, {
     pollingInterval: 10000,
   });
 
   const handleTabChange = (tabValue: string) => {
     setDays(tabValue); // Update the selected tab value
   };
-
+  if (!coin) {
+    return <Center className="flex-1 w-full h-[500px]"><Spinner/></Center>;
+  }
   return (
     <View className="w-full">
       <View className="px-3">
@@ -35,7 +37,7 @@ const CoinDetails = ({coin}: { coin: Coin }) => {
         </Col>
       </View>
 
-      {data && <Chart data={data}/>}
+      <Chart data={data || []}/>
       <Row justifyContent="center">
         <ToggleButtonGroup
           onTabChange={handleTabChange}
@@ -75,7 +77,7 @@ const CoinDetailsScreen = () => {
         />}
 
         <View className="py-5">
-          {coin && <CoinDetails coin={coin}/>}
+          <CoinDetails coin={coin}/>
         </View>
       </BlurCard>
     </>

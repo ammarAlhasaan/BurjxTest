@@ -12,6 +12,7 @@ export * from './avatar';
 export * from './hstack';
 export * from './vstack';
 export * from './center';
+export * from './spinner';
 
 export {
   Col,

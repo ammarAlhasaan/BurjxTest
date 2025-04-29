@@ -4,8 +4,9 @@ import {
   useGetCoinsPaginatedInfiniteQuery,
   useGetGroupedCoinsQuery,
 } from '@/src/state/slices/coinSlice';
-import {Text} from '@/src/components/ui';
+import {Text, Spinner, Center} from '@/src/components/ui';
 import CoinsList from '@/src/screens/home-screen/CoinList';
+
 
 
 const HomeScreen = () => {
@@ -25,7 +26,7 @@ const HomeScreen = () => {
   const coins = useMemo(() => data?.pages.flatMap((page: any) => page.data) ?? [], [data]);
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <Center className="flex-1"><Spinner /></Center>;
   }
   if (isError) {
     return <Text>Something went wrong...</Text>;
