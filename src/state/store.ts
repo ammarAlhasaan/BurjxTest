@@ -1,10 +1,12 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
-import {apiSlice} from '@/src/state/slices/apiSlice.ts';
+import {apiSlice} from '@/src/state/slices/apiSlice';
+import authReducer from '@/src/state/slices/authSlice'; // adjust the path
 
 
 export const store = configureStore({
   reducer: {
+    auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     // other slices...
   },

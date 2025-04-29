@@ -1,13 +1,39 @@
-import * as React from 'react';
-import {Text, View} from 'react-native';
-import CoinList from '@/src/screens/home-screen/CoinList.tsx';
+import React, {useMemo} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  useGetCoinsPaginatedInfiniteQuery,
+  useGetGroupedCoinsQuery,
+} from '@/src/state/slices/coinSlice';
+import {Text} from '@/src/components/ui';
+import CoinsList from '@/src/screens/home-screen/CoinList';
+
 
 const HomeScreen = () => {
+  const {
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = useGetCoinsPaginatedInfiniteQuery(undefined, {
+    pollingInterval: 10000,
+  });
+  useGetGroupedCoinsQuery(undefined, {
+    pollingInterval: 10000,
+  });
+
+  const coins = useMemo(() => data?.pages.flatMap((page: any) => page.data) ?? [], [data]);
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+  if (isError) {
+    return <Text>Something went wrong...</Text>;
+  }
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <CoinList />
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <CoinsList coins={coins} fetchNextPage={fetchNextPage} isFetchingNextPage={isFetchingNextPage}/>
+    </SafeAreaView>
   );
 };
 

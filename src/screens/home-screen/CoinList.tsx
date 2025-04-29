@@ -1,32 +1,56 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import {selectAllCoins, useGetCoinsQuery} from '@/src/state/slices/coinSlice.ts';
-import {FlatList, Text, View} from 'react-native';
+import React, {memo, useCallback} from 'react';
+import {FlatList, View} from 'react-native';
+import {Text} from '@/src/components/ui';
+import {useNavigation} from '@react-navigation/native';
+import {Coin} from '@/src/types';
+import CoinRow from './CoinRow';
+import GroupedCoinSection from './GroupedCoinSection';
 
-const CoinList = () => {
-  const { isLoading, isError, refetch } = useGetCoinsQuery({ page: 1, pageSize: 20 }, {
-    pollingInterval: 10000,
-    skipPollingIfUnfocused: true,
-  });
 
-  const coins = useSelector(selectAllCoins);
-
-  if (isLoading) {return <Text>Loading...</Text>;}
-  if (isError) {return <Text>Failed to load data</Text>;}
+const CoinsList = memo(({coins, fetchNextPage, isFetchingNextPage}: {
+  coins: Coin[];
+  fetchNextPage: () => void;
+  isFetchingNextPage: boolean;
+}) => {
+  const navigation = useNavigation<any>();
+  const renderItem = useCallback(
+    ({item}: { item: Coin }) => (
+      <CoinRow
+        item={item}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate('CoinDetails', {
+            id: item.id,
+          });
+        }}/>
+    ),
+    [navigation]
+  );
 
   return (
     <FlatList
+      contentContainerStyle={{flexGrow: 1}}
       data={coins}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View>
-          <Text>{item.name}</Text>
-          <Text>${item.currentPrice}</Text>
+      renderItem={renderItem}
+      onEndReached={fetchNextPage}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={isFetchingNextPage ? <Text>Loading more...</Text> : null}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={
+        <View className="mb-4">
+          <GroupedCoinSection/>
+          <View className="">
+            <View className="p-4 border-b border-primary-500 self-start">
+              <Text size="xl">All Coins</Text>
+            </View>
+          </View>
         </View>
-      )}
+      }
+      ItemSeparatorComponent={() => <View className="m-2"/>}
     />
   );
-};
+});
 
 
-export default CoinList;
+export default CoinsList;

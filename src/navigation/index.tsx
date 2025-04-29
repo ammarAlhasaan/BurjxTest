@@ -1,13 +1,21 @@
-import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from "@/src/screens/home-screen";
+import { useSelector } from 'react-redux';
+import HomeScreen from '@/src/screens/home-screen';
+import CoinDetailsScreen from '@/src/screens/coin-details-screen';
+import BiometricAuthScreen from '@/src/screens/signin-biometric-screen';
+import { selectIsAuthenticated } from '../state/slices/authSlice';
 
+const Stack = createNativeStackNavigator();
 
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Home: HomeScreen,
-  },
-});
-
-export const Navigation = createStaticNavigation(RootStack);
+export const Navigation = () => {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {!isAuthenticated && (
+        <Stack.Screen name="BiometricAuth" component={BiometricAuthScreen} />
+      )}
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="CoinDetails" component={CoinDetailsScreen} />
+    </Stack.Navigator>
+  );
+};
