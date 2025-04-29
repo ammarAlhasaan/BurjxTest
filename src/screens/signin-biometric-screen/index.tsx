@@ -12,8 +12,6 @@ const rnBiometrics = new ReactNativeBiometrics();
 const BiometricAuthScreen = () => {
   const dispatch = useAppDispatch();
   const handleBiometricAuth = async () => {
-    dispatch(setAuthenticated(true));
-    return;
     const {available} = await rnBiometrics.isSensorAvailable();
 
     if (!available) {
