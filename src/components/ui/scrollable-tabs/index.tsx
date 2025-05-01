@@ -5,7 +5,7 @@ import { tva } from '@gluestack-ui/nativewind-utils/tva';
 import type { VariantProps } from '@gluestack-ui/nativewind-utils';
 
 export const tabButtonStyle = tva({
-  base: 'items-center pb-3 px-4 border-b-2 border-transparent',
+  base: 'items-center py-3 px-4 border-b-2 border-transparent',
   variants: {
     active: {
       true: 'border-primary-500',
